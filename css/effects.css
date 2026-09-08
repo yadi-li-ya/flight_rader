@@ -1,0 +1,170 @@
+/* =========================================================
+   特价雷达 FareRadar · 炫酷特效层（叠加在 style.css 之上）
+   ========================================================= */
+
+/* ---------- 全局流动背景 ---------- */
+body::before{
+  content:"";position:fixed;inset:-20% -10%;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(600px 600px at 12% 18%, rgba(37,99,235,.10), transparent 60%),
+    radial-gradient(560px 560px at 88% 12%, rgba(6,182,212,.12), transparent 60%),
+    radial-gradient(620px 620px at 70% 90%, rgba(168,85,247,.10), transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate;filter:blur(8px);
+}
+@keyframes drift{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-3%,2%,0) scale(1.08)}}
+
+/* ---------- Hero 背景强化 + 网格 ---------- */
+.hero__bg{
+  background:
+    radial-gradient(720px 380px at 82% -12%, rgba(6,182,212,.30), transparent 60%),
+    radial-gradient(720px 420px at 4% 8%, rgba(37,99,235,.28), transparent 55%),
+    radial-gradient(640px 320px at 50% 125%, rgba(168,85,247,.20), transparent 60%);
+  animation:hue 16s ease-in-out infinite alternate;
+}
+@keyframes hue{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(28deg)}}
+.hero__bg::after{
+  content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask:radial-gradient(circle at 50% 28%,#000,transparent 72%);
+          mask:radial-gradient(circle at 50% 28%,#000,transparent 72%);
+}
+.hero__inner{position:relative;z-index:2}
+.hero{position:relative;overflow:hidden}
+
+/* 漂浮光斑 + emoji 装饰 */
+.hero__deco{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:.55;mix-blend-mode:screen}
+.blob--1{width:260px;height:260px;background:radial-gradient(circle,#22d3ee,transparent 70%);top:8%;right:6%;animation:float1 13s ease-in-out infinite}
+.blob--2{width:300px;height:300px;background:radial-gradient(circle,#818cf8,transparent 70%);bottom:-6%;left:8%;animation:float2 17s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-40px,30px) scale(1.12)}}
+@keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(50px,-30px) scale(1.1)}}
+.floaty{position:absolute;font-size:30px;opacity:.85;filter:drop-shadow(0 6px 12px rgba(15,23,42,.18));animation:fly 18s linear infinite}
+.floaty--1{top:14%;left:6%;animation-duration:20s}
+.floaty--2{top:62%;left:46%;font-size:24px;animation-duration:24s;animation-direction:reverse}
+.floaty--3{top:30%;right:10%;font-size:26px;animation-duration:22s}
+@keyframes fly{0%{transform:translate(0,0) rotate(-6deg)}25%{transform:translate(20px,-18px) rotate(6deg)}50%{transform:translate(-14px,14px) rotate(-4deg)}75%{transform:translate(16px,10px) rotate(5deg)}100%{transform:translate(0,0) rotate(-6deg)}}
+
+/* ---------- 标题发光 + 渐变下划线 ---------- */
+.hero__title .hl{text-shadow:0 0 26px rgba(37,99,235,.35)}
+.section__head h2{position:relative;display:inline-block;background:linear-gradient(120deg,var(--ink),#1e3a8a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section__head h2::after{content:"";position:absolute;left:0;bottom:-10px;width:56px;height:4px;border-radius:4px;
+  background:linear-gradient(90deg,var(--sky),var(--cyan));box-shadow:0 0 12px rgba(37,99,235,.5);animation:slide 2.4s ease-in-out infinite alternate}
+@keyframes slide{0%{width:34px;opacity:.7}100%{width:64px;opacity:1}}
+
+/* ---------- LIVE 脉冲 ---------- */
+.pill--live{display:inline-flex;align-items:center;gap:8px;border-color:rgba(239,68,68,.35);color:#b91c1c}
+.pill--live::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--deal);
+  box-shadow:0 0 0 0 rgba(239,68,68,.6);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.55)}70%{box-shadow:0 0 0 9px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+
+/* ---------- 玻璃拟态搜索卡 + 顶部高光 ---------- */
+.search-card{background:rgba(255,255,255,.72);backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 24px 60px rgba(37,99,235,.22),0 2px 10px rgba(15,23,42,.06);position:relative;overflow:hidden}
+.search-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--sky),var(--cyan),#a855f7);background-size:200% 100%;animation:flow 4s linear infinite}
+@keyframes flow{0%{background-position:0 0}100%{background-position:200% 0}}
+
+/* ---------- 按钮流光 ---------- */
+.btn--primary{position:relative;overflow:hidden}
+.btn--primary::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);
+  animation:shine 3.2s ease-in-out infinite}
+@keyframes shine{0%{left:-70%}55%{left:130%}100%{left:130%}}
+.brand:hover .brand__mark{transform:rotate(20deg) scale(1.12)}
+.brand__mark{display:inline-block;transition:.3s}
+
+/* ---------- 卡片光追高光 ---------- */
+.xcard,.dcard,.acard,.ccard,.dim{position:relative;overflow:hidden}
+.xcard::after,.dcard::after,.acard::after,.ccard::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(37,99,235,.16),transparent 60%)}
+.xcard:hover::after,.dcard:hover::after,.acard:hover::after,.ccard:hover::after{opacity:1}
+.xcard:hover,.dcard:hover,.acard:hover,.ccard:hover{border-color:rgba(37,99,235,.45);
+  box-shadow:0 18px 40px rgba(37,99,235,.18)}
+
+/* 价格脉冲 */
+.dcard__price b{transition:.2s}
+.dcard:hover .dcard__price b{transform:scale(1.06);display:inline-block;color:#dc2626;text-shadow:0 0 14px rgba(239,68,68,.4)}
+.xcard__price b{transition:.2s}
+.xcard:hover .xcard__price b{transform:scale(1.05);display:inline-block}
+
+/* ---------- 滚动入场 ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- 导航滚动收缩 ---------- */
+.nav.scrolled{background:rgba(255,255,255,.92);box-shadow:0 8px 30px rgba(15,23,42,.10)}
+.nav__inner{padding:12px 20px;transition:.2s}
+.nav.scrolled .nav__inner{padding:8px 20px}
+
+/* ---------- 雷达描边入场 ---------- */
+#radar polygon:last-of-type{animation:radarIn .9s ease both}
+@keyframes radarIn{from{opacity:0;transform:scale(.85);transform-origin:160px 160px}to{opacity:1;transform:scale(1)}}
+
+/* ---------- 回到顶部 ---------- */
+.to-top{position:fixed;right:22px;bottom:22px;z-index:60;width:46px;height:46px;border:none;border-radius:50%;
+  background:linear-gradient(135deg,var(--sky),var(--cyan));color:#fff;font-size:20px;font-weight:800;cursor:pointer;
+  box-shadow:0 10px 26px rgba(37,99,235,.45);opacity:0;transform:translateY(16px) scale(.8);pointer-events:none;transition:.25s;
+  display:grid;place-items:center}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{transform:translateY(-3px) scale(1.06)}
+
+/* ---------- 特价日历格 hover 发光 ---------- */
+.cal__cell:not(.empty):hover{box-shadow:0 0 0 2px #fff,0 6px 18px rgba(16,185,129,.5);z-index:1}
+
+/* ---------- 弹窗入场更弹 ---------- */
+.modal__panel{animation:pop .28s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:none}}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
+
+/* ---------- 真实到手价 升级样式 ---------- */
+@media(min-width:981px){
+  .score{grid-template-columns:300px 1fr 1fr;align-items:stretch}
+}
+.score__ring{display:flex;flex-direction:column;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);
+  border-radius:18px;padding:18px;box-shadow:var(--shadow-sm);justify-content:center}
+.ring{width:150px;height:150px}
+.weights{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.wbtn{border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:11px;font-size:12.5px;font-weight:700;
+  cursor:pointer;color:var(--muted);font-family:inherit;transition:.15s}
+.wbtn:hover{border-color:var(--sky);color:var(--sky)}
+.wbtn.is-active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+.realprice{text-align:center;margin:4px 0 2px}
+.realprice__label{font-size:13px;color:var(--muted);font-weight:700}
+.realprice__val{font-size:30px;font-weight:800;color:var(--deal);line-height:1.1}
+.realprice__val small{font-size:12px;color:var(--muted);font-weight:600}
+.realprice__cmp{font-size:12px;color:var(--muted);margin-top:4px}
+
+.costbar{display:flex;height:26px;border-radius:9px;overflow:hidden;margin:12px 0;font-size:11px;font-weight:800;color:#fff}
+.costbar__bare{background:linear-gradient(90deg,#2563eb,#3b82f6);display:flex;align-items:center;padding-left:8px;min-width:42px}
+.costbar__hidden{background:linear-gradient(90deg,#f97316,#ef4444);display:flex;align-items:center;padding-left:8px}
+.cost__list{list-style:none;display:grid;gap:8px}
+.cost__item{display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:8px;font-size:12.5px;
+  background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.cost__k{font-weight:800;color:#334155}
+.cost__note{color:var(--muted);font-size:12px}
+.cost__v{font-weight:800;white-space:nowrap}
+.cost__v.plus{color:var(--deal)}.cost__v.zero{color:var(--low)}
+.pitfalls{margin-top:12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:10px 12px;font-size:12.5px;color:#9a3412}
+.pitfalls b{color:var(--deal);display:block;margin-bottom:6px}
+.pitfalls .pit{display:block;margin:3px 0;line-height:1.5}
+
+.score__dims .dim{text-align:left;transition:.2s}
+.dim--low{border-color:#bbf7d0}.dim--amber{border-color:#fde68a}.dim--deal{border-color:#fecaca}
+.dim__top{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:700;margin-bottom:6px}
+.dim__top b{font-size:18px}
+.dim__bar{height:7px;border-radius:5px;background:#eef2f7;overflow:hidden}
+.dim__bar i{display:block;height:100%;border-radius:5px}
+.dim__note{font-size:11.5px;color:var(--muted);margin-top:6px}
+
+.md__real{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:9px 12px;font-size:13px;margin-bottom:12px}
+.md__real b{color:#15803d;font-size:16px}
+.md__pit{background:#fff7ed;border-left:3px solid var(--amber);padding:8px 12px;border-radius:8px;font-size:12.5px;color:#9a3412;margin-bottom:12px;line-height:1.5}

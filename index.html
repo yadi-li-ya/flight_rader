@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>特价雷达 FareRadar · 全网特价机票一键发现</title>
+  <meta name="description" content="特价雷达 FareRadar —— 不知道去哪？AI 帮你捡最划算的机票。全网特价聚合、真实到手价评分、任意飞反向搜索。" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/effects.css" />
+</head>
+<body>
+
+  <!-- ============ 顶部导航 ============ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="brand" href="#home">
+        <span class="brand__mark">📡</span>
+        <span class="brand__name">特价雷达 <em>FareRadar</em></span>
+      </a>
+      <nav class="nav__links" id="navLinks">
+        <a href="#home">首页</a>
+        <a href="#explore">任意飞</a>
+        <a href="#deals">捡漏流</a>
+        <a href="#calendar">特价日历</a>
+        <a href="#score">真实到手价</a>
+        <a href="#airlines">航司活动</a>
+        <a href="#alerts">降价提醒</a>
+      </nav>
+      <div class="nav__user">
+        <button class="btn btn--ghost" data-open-login>登录</button>
+        <button class="btn btn--primary">我的捡漏</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ Hero / 反向搜索 ============ -->
+  <section class="hero" id="home">
+    <div class="hero__bg"></div>
+    <div class="hero__deco" aria-hidden="true">
+      <span class="blob blob--1"></span>
+      <span class="blob blob--2"></span>
+      <span class="floaty floaty--1">✈️</span>
+      <span class="floaty floaty--2">🛫</span>
+      <span class="floaty floaty--3">☁️</span>
+    </div>
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <span class="pill pill--live">全网 2,184 条特价正在放送</span>
+        <h1 class="hero__title">不知道去哪？<br/><span class="hl">AI 替你挑最划算的机票</span></h1>
+        <p class="hero__sub">聚合航司官网 + 携程/去哪儿/飞猪/同程全网特价，用「真实到手价」算清隐藏成本，让每一次出发都值回票价。</p>
+        <ul class="hero__points">
+          <li>✅ <b>反向搜索</b>：不知道去哪？给预算和假期，AI 帮你挑最值的目的地</li>
+          <li>✅ <b>综合评分</b>：性价比、退改、舒适、准点率、行李托运五个维度综合评估</li>
+          <li>✅ <b>实时捡漏</b>：航司官网 + OTA 特价实时聚合，看到就是赚到</li>
+          <li>✅ <b>降价提醒</b>：设好心理价，掉价自动推</li>
+          <li>✅ <b>特价日历</b>：一眼挑出你的「错峰黄金日」</li>
+        </ul>
+      </div>
+
+      <!-- 搜索面板：传统搜索 / 任意飞 -->
+      <div class="search-card" id="searchCard">
+        <div class="search-card__tabs">
+          <button class="stab is-active" data-mode="flex">🧭 任意飞（不知道去哪）</button>
+          <button class="stab" data-mode="normal">🔍 传统搜索（已有目的地）</button>
+        </div>
+
+        <!-- 任意飞表单 -->
+        <form class="sform sform--flex is-active" id="flexForm">
+          <div class="field">
+            <label>🛫 从哪出发</label>
+            <select id="flexFrom">
+              <option>上海</option><option>北京</option><option>广州</option>
+              <option>成都</option><option>深圳</option><option>杭州</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>📅 出发日期</label>
+            <input type="date" id="flexDate" />
+          </div>
+          <div class="field">
+            <label>💰 单程预算（每人）</label>
+            <select id="flexBudget">
+              <option value="600">¥600 以内（穷游党）</option>
+              <option value="1000" selected>¥1000 以内（性价比）</option>
+              <option value="1600">¥1600 以内（舒适派）</option>
+              <option value="9999">不差钱（全看喜欢）</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>📅 假期天数</label>
+            <select id="flexDays">
+              <option value="3">3天+</option>
+              <option value="5" selected>5天+</option>
+              <option value="7">7天+</option>
+            </select>
+          </div>
+          <div class="field field--wide">
+            <label>🎯 想去哪种地方</label>
+            <div class="chips" id="prefChips">
+              <button type="button" class="chip is-active" data-pref="all">不限</button>
+              <button type="button" class="chip" data-pref="island">🏝️ 海岛</button>
+              <button type="button" class="chip" data-pref="city">🏙️ 城市</button>
+              <button type="button" class="chip" data-pref="nature">⛰️ 自然</button>
+              <button type="button" class="chip" data-pref="food">🍜 美食</button>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">🚀 帮我挑最划算的目的地</button>
+        </form>
+
+        <!-- 传统搜索表单 -->
+        <form class="sform sform--normal" id="normalForm">
+          <div class="field"><label>从</label><input id="nFrom" value="上海" /></div>
+          <div class="field"><label>到</label><input id="nTo" value="昆明" /></div>
+          <div class="field"><label>去程</label><input type="date" id="nDep" /></div>
+          <div class="field"><label>返程</label><input type="date" id="nRet" /></div>
+          <div class="field field--wide field--row">
+            <label class="check"><input type="checkbox" id="nDirect" checked /> 只看直飞</label>
+            <label class="check"><input type="checkbox" id="nStudent" /> 含学生票</label>
+            <button type="submit" class="btn btn--primary btn--block">搜特价</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 任意飞结果 ============ -->
+  <section class="section" id="explore">
+    <div class="section__head">
+      <h2>🧭 任意飞 · AI 反推目的地</h2>
+      <p>把「不知道去哪」变成「原来这儿最香」。下面是根据你的条件实时算出的推荐——点开任意一张看 <b>真实到手价</b>。</p>
+    </div>
+    <div class="explore__grid" id="exploreGrid"><!-- JS 注入 --></div>
+  </section>
+
+  <!-- ============ 实时捡漏流 ============ -->
+  <section class="section section--alt" id="deals">
+    <div class="section__head">
+      <h2>🔥 实时捡漏流</h2>
+      <p>全网航司 + OTA 正在放的特价，按「发布时间」倒序。手慢无，看到就是赚到。</p>
+    </div>
+    <div class="filters" id="dealFilters">
+      <div class="filters__group">
+        <button class="fchip is-active" data-src="all">全部</button>
+        <button class="fchip" data-src="airline">✈️ 航司官方</button>
+        <button class="fchip" data-src="ota">🛒 OTA 平台</button>
+      </div>
+      <div class="filters__group">
+        <button class="fchip is-active" data-tag="all">不限</button>
+        <button class="fchip" data-tag="direct">直飞</button>
+        <button class="fchip" data-tag="low">¥500 内</button>
+        <button class="fchip" data-tag="flash">限时秒杀</button>
+      </div>
+    </div>
+    <div class="deals__note" id="dealsNote"><!-- JS 注入 --></div>
+    <div class="deals__grid" id="dealsGrid"><!-- JS 注入 --></div>
+  </section>
+
+  <!-- ============ 特价日历 ============ -->
+  <section class="section" id="calendar">
+    <div class="section__head">
+      <h2>📅 特价日历 · 哪天飞最便宜</h2>
+      <p>同一航线未来 5 周的最低价日历。绿色越深越便宜，一眼挑出你的「错峰黄金日」。<b>点任意一天，看当日航班对比与购票入口。</b></p>
+    </div>
+    <div class="cal">
+      <div class="cal__routes" id="calRoutes">
+        <button class="rchip is-active" data-route="SHA-KMG">上海 ⇄ 昆明</button>
+        <button class="rchip" data-route="PEK-SYX">北京 ⇄ 三亚</button>
+        <button class="rchip" data-route="CAN-CTU">广州 ⇄ 成都</button>
+      </div>
+      <div class="cal__grid" id="calGrid"><!-- JS 注入 --></div>
+      <div class="cal__legend">
+        <span>贵</span>
+        <i class="lg lg-1"></i><i class="lg lg-2"></i><i class="lg lg-3"></i><i class="lg lg-4"></i><i class="lg lg-5"></i>
+        <span>便宜</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 机票综合评估 · 真实到手价预估 ============ -->
+  <section class="section section--alt" id="score">
+    <div class="section__head">
+      <h2>📊 机票综合评估 · 真实到手价预估</h2>
+      <p>每张机票卡片下方都带 <b>综合评估分</b>，点开即可看到该票的完整拆解。下面是我们的算分规则，全程透明可复核。</p>
+    </div>
+    <div class="method">
+      <div class="method__col">
+        <h3>① 五维打分（规则实时算，非写死）</h3>
+        <ul>
+          <li><b>💰 性价比</b>：裸价相对同航线市场均价的折扣力度</li>
+          <li><b>🧳 退改友好</b>：退票费 / 改签费越高，分越低</li>
+          <li><b>🛋️ 舒适度</b>：红眼、中转、超长航程逐项扣分</li>
+          <li><b>⏱️ 准点率</b>：航司历史准点表现</li>
+          <li><b>🎒 含行李</b>：免费托运额度，廉航无托运直接低分</li>
+        </ul>
+      </div>
+      <div class="method__col">
+        <h3>② 按你的偏好加权</h3>
+        <p>评分弹窗里可切换权重，综合分与 S/A/B/C/D 等级<b>实时重算</b>：</p>
+        <ul>
+          <li><b>⚖️ 均衡</b>：五维平均，适合大多数人</li>
+          <li><b>💰 省钱优先</b>：性价比权重拉到 50%</li>
+          <li><b>🛋️ 舒服优先</b>：舒适度权重拉到 40%</li>
+          <li><b>🧳 灵活优先</b>：退改友好权重拉到 45%</li>
+        </ul>
+      </div>
+      <div class="method__col">
+        <h3>③ 真实到手价预估</h3>
+        <p><b>真实到手价</b> = 裸价 + 行李补购 + 红眼耗时 + 中转机会成本 + 退改不灵活</p>
+        <ul>
+          <li><b>行李补购</b>：不足 20kg 按每 kg ¥16 补到 20kg</li>
+          <li><b>红眼耗时</b>：凌晨起降折算时间成本 ¥60</li>
+          <li><b>中转机会成本</b>：每小时中转停留 ¥35</li>
+          <li><b>退改不灵活</b>：退票费 + 改签费 ×50% 折为风险折价</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 航司活动 ============ -->
+  <section class="section" id="airlines">
+    <div class="section__head">
+      <h2>🎁 航司活动通知</h2>
+      <p>航司大促 / 闪购 / 会员日实时播报——哪天放票、去哪捡漏，第一时间告诉你，顺手就能去官网抢。</p>
+    </div>
+    <div class="airlines" id="airlinesList"><!-- JS 注入 --></div>
+  </section>
+
+  <!-- ============ 降价提醒 ============ -->
+  <section class="section section--alt" id="alerts">
+    <div class="section__head">
+      <h2>🔔 降价提醒</h2>
+      <p>设好「心理价」，票价一掉到目标线，微信 / 短信立刻推你。盯价这事儿，交给雷达。</p>
+    </div>
+    <div class="alerts">
+      <form class="alerts__form" id="alertForm">
+        <div class="field"><label>航线</label><input value="上海 → 昆明" /></div>
+        <div class="field"><label>目标单价</label><input value="¥480" /></div>
+        <div class="field field--wide">
+          <label>通知方式</label>
+          <div class="chips">
+            <button type="button" class="chip is-active">💬 微信</button>
+            <button type="button" class="chip is-active">📧 邮件</button>
+            <button type="button" class="chip">📱 短信</button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn--primary btn--block">🛰️ 开启雷达监控</button>
+      </form>
+      <ul class="alerts__how">
+        <li><b>1. 设条件</b>选航线 + 心理价，10 秒搞定</li>
+        <li><b>2. 雷达盯</b>每 15 分钟比一次全网价</li>
+        <li><b>3. 掉价推</b>到价立刻通知，直接给购票链接</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 捡漏社区 ============ -->
+  <section class="section" id="community">
+    <div class="section__head">
+      <h2>💬 捡漏社区 · 真实用户晒单</h2>
+      <p>每天都有人晒「刚捡到的神价」。跟着老羊毛党，少走弯路。</p>
+    </div>
+    <div class="community" id="communityList"><!-- JS 注入 --></div>
+  </section>
+
+  <!-- ============ 页脚 ============ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="brand__mark">📡</span> 特价雷达 <em>FareRadar</em>
+        <p>全网特价机票发现平台 · 仅做信息聚合，购票跳转官方/OTA。</p>
+      </div>
+      <div class="footer__cols">
+        <div><b>产品</b><a href="#explore">任意飞</a><a href="#deals">捡漏流</a><a href="#calendar">特价日历</a></div>
+        <div><b>合作</b><a href="#">航司接入</a><a href="#">OTA 合作</a><a href="#">商务联系</a></div>
+        <div><b>关于</b><a href="#">定价逻辑</a><a href="#">隐私协议</a><a href="#">免责声明</a></div>
+      </div>
+    </div>
+    <div class="footer__bar">© 2026 特价雷达 FareRadar · 本页为产品设计原型 Demo，数据均为演示用途。</div>
+  </footer>
+
+  <!-- ============ 特价日历 · 航班对比弹窗 ============ -->
+  <div class="modal" id="calModal" aria-hidden="true">
+    <div class="modal__mask" data-close></div>
+    <div class="modal__panel">
+      <button class="modal__x" data-close>✕</button>
+      <div id="calModalBody"><!-- JS 注入 --></div>
+    </div>
+  </div>
+
+  <!-- ============ 机票详情弹窗 ============ -->
+  <div class="modal" id="dealModal" aria-hidden="true">
+    <div class="modal__mask" data-close></div>
+    <div class="modal__panel" id="dealModalBody"><!-- JS 注入 --></div>
+  </div>
+
+  <!-- ============ 真实到手价评分弹窗 ============ -->
+  <div class="modal" id="scoreModal" aria-hidden="true">
+    <div class="modal__mask" data-close></div>
+    <div class="modal__panel modal__panel--score">
+      <button class="modal__x" data-close>✕</button>
+      <div id="scoreModalBody"><!-- JS 注入 --></div>
+    </div>
+  </div>
+
+  <!-- ============ 登录弹窗 ============ -->
+  <div class="modal" id="loginModal" aria-hidden="true">
+    <div class="modal__mask" data-close></div>
+    <div class="modal__panel modal__panel--login">
+      <button class="modal__x" data-close>✕</button>
+      <h3>📡 登录特价雷达</h3>
+      <p class="muted">微信扫码或手机号一键登录，开启你的捡漏雷达。</p>
+      <div class="qr">🔳<br/><span>模拟微信扫码区</span></div>
+      <div class="or">或</div>
+      <input class="login-input" placeholder="手机号" />
+      <button class="btn btn--primary btn--block">获取验证码登录</button>
+    </div>
+  </div>
+
+  <!-- ============ Toast ============ -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ============ 回到顶部 ============ -->
+  <button class="to-top" id="toTop" aria-label="回到顶部">↑</button>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
